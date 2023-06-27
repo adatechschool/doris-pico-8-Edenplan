@@ -19,14 +19,17 @@ end
 
 
 function _update()
+
 --player_animate()
 player_movement()
+
 --create_enemy()
 update_camera()
 for st in all (s) do
 st.x-=st.spd --vitesse
 if(st.x<0) then st.x=1024
 end
+
 end
 --local elapsed_time = 
 --time() - start_time
@@ -41,9 +44,10 @@ end
 end
 
 function _draw()
-cls(12)
+
 rectfill(0,0,127,26,12)
-spr(7)
+
+
 draw_map()
 for st in all(s) do
 pset(st.x,st.y, st.col)
@@ -77,8 +81,10 @@ return fget(sprite,flag)
 end
 
 function update_camera()
-//perso va jusqu'au bout du cadre 
-//et la camera ne sort pas dru cadre
+//perso va jusqu'au bout
+-- du cadre 
+//et la camera ne sort pas
+-- du cadre
 local camx=mid(0,p.x-9,127-15)
 local camy=mid(0,p.y-11,63-15)
 camera(camx*8,camy*8)
@@ -89,26 +95,30 @@ local sprite=mget(x,y)
 mset(x,y,sprite+1)
 end
 
-function pick_up_food(x,y)
-next_title(x,y)
-p.food+=1
-sfx(1)
-end
-
 function pick_up_heart(x,y)
 next_title(x,y)
 p.heart+=1
+cls(6)
 sfx(1)
 end
+
+function pick_up_food(x,y)
+next_title(x,y)
+p.food+=1
+cls(12)
+sfx(1)
+end
+
+
 -->8
 -- player
 function create_player()
     p = {
         x = 8,
         y = 10,
-        sprite = 7,
-        food = 0,
+        sprite = 65,
         heart= 0,
+        food = 0,
         y_speed = 0,
      		
     }
@@ -118,24 +128,31 @@ function player_movement()
     local newx = p.x
     local newy = p.y
 
-    if btnp(0) then newx -= 1 end -- gauche
-    if btnp(1) then newx += 1 end -- droite
+    if btnp(0) then
+     newx -= 1 end -- gauche
+    if btnp(1) then 
+    newx += 1 end -- droite
 
     -- appliquer la gravite
     p.y_speed += 0.2
 
 
-    --deplacement vertical avec gravitれた
+ --deplacement vertical
+ -- avec gravitれた
     newy += p.y_speed
 
-    -- verifier les collisions verticales
+ -- verifier les collisions
+ -- verticales
     local collision_y = check_flag(0, newx, flr(newy))
     if not collision_y then
         p.x = mid(0, newx, 127)
         p.y = mid(0, flr(newy), 63)
     else
         sfx()
-        -- ajuster la position du joueur pour eviter l'enfoncement dans la collision
+  -- ajuster la position
+ -- du joueur pour eviter
+-- l'enfoncement dans la 
+--collision
         if p.y_speed > 0 then
             p.y = flr(newy) - 1
         else
@@ -146,13 +163,24 @@ function player_movement()
         p.is_jumping = false
     end
 
-    if btnp(⬆️) and not p.is_jumping and not check_flag(0, p.x, p.y - 1) and p.y < 63 then
-        -- permettre le saut si le joueur n'est pas en collision avec un obstacle au-dessus, s'il n'est pas dれたjれき en train de sauter et s'il n'a pas atteint la hauteur maximale
-        p.y_speed = -1  -- appliquer une force vers le haut pour le saut
+    if btnp(⬆️) and not
+     p.is_jumping
+      and not check_flag(0, p.x, p.y - 1)
+       and p.y < 63 then
+ -- permettre le saut
+-- si le joueur n'est pas en
+-- collision avec un obstacle
+-- au-dessus, s'il n'est pas
+-- dれたjれき en train de
+-- sauter et s'il n'a pas
+-- atteint la hauteur maximale
+        p.y_speed = -1 
+ -- appliquer une force
+ -- vers le haut pour le saut
         p.is_jumping = true
     end
 
-    -- gerer les limites du terrain
+ -- gerer les limites du terrain
     if p.x < 0 then
         p.x = 0
     end
@@ -173,7 +201,10 @@ function player_movement()
         p.is_jumping = false
     end
 
-    -- appel de la fonction interact lors d'une interaction avec l'environnement
+ -- appel de la fonction
+ -- interact lors d'une
+ -- interaction avec
+ -- l'environnement
     interact(p.x, flr(p.y))
 end
 
@@ -186,7 +217,9 @@ end
 function interact(x, y)
     if check_flag(1, x, y) then
         pick_up_heart(x, y)
+       
     end
+    
 end
 
 function draw_player()
@@ -198,17 +231,19 @@ end
 -->8
 --ui
 --graphique compteur
-function draw_ui_cupcake()
- camera(0,0)
- spr(19,2,4)
-print("X"..p.food,10,4,7)
-end
 
 function draw_ui_heart()
  camera(0,0)
  spr(54,2,14)
 print("X"..p.heart,10,14,7)
 end
+
+function draw_ui_cupcake()
+ camera(0,0)
+ spr(19,2,4)
+print("X"..p.food,10,4,7)
+end
+
 -->8
 --monstres et cie
 
@@ -271,14 +306,14 @@ __gfx__
 6644444611111111cccccccc4442444242224242cccccccc0f888f000000000047977974cccccc44444ccccc55555555555555550000000f00f0000000000000
 6666466611111111cccccccc2424242424242424cccccccc00f8f0000000000047799774cccccc44454ccccc55555555555555550000000e00e0000000000000
 6666466611111111cccccccc4242424242424242cccccccc000f00000000000044444444cccccc54444ccccc5555555555555555000000ee00ee000000000000
-0000000000000000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
-0000000000000000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
-0000000000000000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
-0000000000000000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
-0000000000000000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000ccccccccccccccccccccccc333cccccc00000000
-0000000000000000ccccc77777777ccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccc33333ccccccc33333333cccc00000000
-0000000000000000cccc7777777777cccccccccccccccccccccccccccccccccccccccccccccccccc00000000ccccc3bbbb333333cc333bbbbb3333cc00000000
-0000000000000000ccc77777777777cccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccc33b33bbb3333333bbb3333333ccc00000000
+0e8eee000e8eee00cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
+08e1f1e008e1f1e0cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
+0effffe00effffe0cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
+ee0f00e00e0f00e0cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccccccccccccccccccccccccccc00000000
+0fafaf000fafaf00cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc00000000ccccccccccccccccccccccc333cccccc00000000
+f0aaa0f00faaaf00ccccc77777777ccccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccccccc33333ccccccc33333333cccc00000000
+00bbb00000bbb000cccc7777777777cccccccccccccccccccccccccccccccccccccccccccccccccc00000000ccccc3bbbb333333cc333bbbbb3333cc00000000
+00f0f00000f0f000ccc77777777777cccccccccccccccccccccccccccccccccccccccccccccccccc00000000cccc33b33bbb3333333bbb3333333ccc00000000
 1111111111111111ccc777777777777ccccccccccccccccccccccccccccccccccccccccccccccccc00000000ccc33333333bbbb3333b33333b3ccccc00000000
 1111111111111111cc77667667667667cccccccccccccccccccccccccccccccccccccccccccccccc00000000cc3333bbb33333333333333bbbcccccc00000000
 1111111111111111ccc7766677766677cccccccccccccccccccccccccccccccccccccccccccccccc00000000ccc33333bb333333333333bb3ccccccc00000000
@@ -305,18 +340,18 @@ __gfx__
 1167777777776111cccccccccccccccccccccccccccccccccccccccccccccccccccc7777777777cc00000000cccccccccccccc44444ccccccccccccc3333333c
 81818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181
 81818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181
-81818181818181818181818181818181808080808181818181818181818181818181818181818181818181818181818181818181818181818181818181818181
-81818181818181818181818181818181818181818181818181818181818181818181818080808181818181818181818181818181818181818181818181818080
-81818181818181818181818181818181818181818181818181818181818181818181818181818181818080808181818181818181818181818181818181818181
-81818181818181818080808080818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181
-81818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818180818181818181
+81818181818181818181818181818181808080808181818181818181818181818181818181818181818181638181818181818181818181818181818181818181
+81818181818181818163818181818181818181818181818181818181818181818181818080808181818181818181818181818181818181818181818181818080
+81818181818181818181818181818181818181818181818181818181818181818181818181818181818080808181818181818181818181818163818181818181
+81818181818181818080808080818181818181818181818181818181818181818181818181818181818181816381818181818181818181818181818181818181
+81818181818181818181818181818181818181818181818181638181818181818181818181818181818181818181818181818181818181818180818181818181
 81038181818181818181818181818181818181818181808080808181818181818181818181818181818181818181818181818181818181818181818181818181
 818181818181818181818080808081810181818181818181818181818181818181818181818181818181818181818181e1818181818181818181818181818181
-81818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818181818080808181
+81818181818181818181818181818181818181818181818181818181818181638181818181818181818181818181818181818181818181818181818080808181
 81818181818181818181818181818181818181818181818181818181818181818181808080818181818181818181818181818181818181818181818181818181
-818181818181818181818181818181818181818181818181818181818180808080818181818181818181818181818181e1818181818181818181818181818181
-81818181818181818181818181818181818181818181818181818181818181818181818181818181818181810381818181818181808080808181818080808081
-81818181808181818181818181018181818181818181818181038181818181818181818181818181818181818181818181818181818181818180818181818181
+818181818181818181818163818181818181818181818181818181818180808080818181818181818181818181818181e1818181818181818181818181818181
+81818181818181818181818181816381818181818181818181818181818181818181818181818181818181810381818181818181808080808181818080808081
+81818181808181818181818181018181818181818181818181038181818181818181818181818181818181818181818181818181818181818180818163818181
 818181818180808081818181e18181818181818180818181810381818180818181818181818181e1818181818181818181818181818181818181818181818181
 818181818181818181e18181818181818181818181e1818181818181818181818181818181e18181818180808080818181818101818181818181818181818181
 81818181818181818181818181818181818181808081808181818181818080818181818181818181818181818181818181818181818181818181818181818181
