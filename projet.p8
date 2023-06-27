@@ -4,26 +4,38 @@ __lua__
 // jeu
 
 function _init()
+start_time = time()
+  duration = 60
 //animation etoile:
 s={}
 for i=1,1000 do 
-ns={x=rnd(1024),y=rnd(136)+376,
+ns={x=rnd(1024),y=rnd(98)+376,
 col=7,spd=rnd(3)+1}
 add(s,ns)
 end
 create_player()
 
 
-end
- 
+
+ end
 function _update()
+
 player_movement()
 update_camera()
 for st in all (s) do
 st.x-=st.spd --vitesse
 if(st.x<0) then st.x=1024 end
 end
-
+--local elapsed_time = 
+--time() - start_time
+--local remaining_time =
+ --duration - elapsed_time
+ --if remaining_time <= 0 then
+-- p.x = 8
+-- p.y = 10
+      --  return
+  
+ -- end
 end
 
 function _draw()
@@ -36,6 +48,14 @@ pset(st.x,st.y, st.col)
 end
 draw_player()
 draw_ui()
+
+local elapsed_time =
+time() - start_time
+ local remaining_time =
+   duration - elapsed_time
+   local seconds = remaining_time % 60
+ print("temps restant: " .. seconds .. " ", 36, 4, 9)
+
 end
 
 -->8
@@ -70,57 +90,103 @@ p.food+=1
 sfx(1)
 end
 -->8
-//player 1
 function create_player()
-p={
-x=8,
-y=10,
-sprite=7,
-food=0
-}
+    p = {
+        x = 8,
+        y = 10,
+        sprite = 7,
+        food = 0,
+        y_speed = 0,
+        is_jumping = false
+    }
 end
 
 function player_movement()
-newx=p.x
-newy=p.y
+    local newx = p.x
+    local newy = p.y
 
-if (btnp(⬅️)) newx-=1
-if (btnp(➡️)) newx+=1
-if (btnp(⬆️)) newy-=1
-if (btnp(⬇️)) newy+=1
+    if btnp(0) then newx -= 1 end -- gauche
+    if btnp(1) then newx += 1 end -- droite
 
-interact(newx,newy)
+    -- appliquer la gravite
+    p.y_speed += 0.2
 
-if not check_flag(0,newx,newy) then
-p.x=mid(0,newx,127)
-p.y=mid(0,newy,63)
-else
-sfx(0)
+    -- limiter la vitesse verticale
+    if p.y_speed > 4 then
+        p.y_speed = 4
+    end
+
+    --deplacement vertical avec gravitれた
+    newy += p.y_speed
+
+    -- verifier les collisions verticales
+    local collision_y = check_flag(0, newx, flr(newy))
+    if not collision_y then
+        p.x = mid(0, newx, 127)
+        p.y = mid(0, flr(newy), 63)
+    else
+        sfx(0)
+        -- ajuster la position du joueur pour eviter l'enfoncement dans la collision
+        if p.y_speed > 0 then
+            p.y = flr(newy) - 1
+        else
+            p.y = flr(newy)
+        end
+        -- reinitialiser la vitesse verticale en cas de collision
+        p.y_speed = 0
+        p.is_jumping = false
+    end
+
+    if btnp(⬆️) and not p.is_jumping and not check_flag(0, p.x, p.y - 1) and p.y < 63 then
+        -- permettre le saut si le joueur n'est pas en collision avec un obstacle au-dessus, s'il n'est pas dれたjれき en train de sauter et s'il n'a pas atteint la hauteur maximale
+        p.y_speed = -1  -- appliquer une force vers le haut pour le saut
+        p.is_jumping = true
+    end
+
+    -- gerer les limites du terrain
+    if p.x < 0 then
+        p.x = 0
+    end
+
+    if p.y < 0 then
+        p.y = 0
+        p.y_speed = 0
+    end
+
+    if p.x > 127 then
+        p.x = 127
+    end
+
+    if p.y > 63 then
+        p.x = 8
+        p.y = 10
+        p.y_speed = 0
+        p.is_jumping = false
+    end
+
+    -- appel de la fonction interact lors d'une interaction avec l'environnement
+    interact(p.x, flr(p.y))
 end
-end
 
-function interact(x,y)
-if check_flag(1,x,y) then
-pick_up_food(x,y)
-end
-
-
-if(p.x<0)p.x=0
-if(p.y<0)p.y=0
-if(p.x>127)p.x=127
-if(p.y>63)p.y=63
+function interact(x, y)
+    if check_flag(1, x, y) then
+        pick_up_food(x, y)
+    end
 end
 
 function draw_player()
-spr(p.sprite,p.x*8,p.y*8)
+    spr(p.sprite, p.x * 8, p.y * 8)
 end
+
+
+
 -->8
 --ui
 
 function draw_ui()
  camera(0,0)
- spr(19,2,2)
-print("X"..p.food,10,2,7)
+ spr(19,2,4)
+print("X"..p.food,10,4,7)
 end
 
 __gfx__
