@@ -250,42 +250,245 @@ end
 --monstres et cie
 
 function create_enemies()
-e={x=01, y=24, sprite=11}
+	e1={x=01, y=24, sprite=12}
+	e2={x=32, y=24, sprite=12}
+	e3={x=74, y=26, sprite=12}
+	e4={x=112, y=26, sprite=12}
+	
+	e5={x=111, y=41, sprite=12}
+	e6={x=84, y=41, sprite=12}
+	e7={x=56, y=41, sprite=12}
+	e8={x=9, y=41, sprite=12}
+	
+	e9={x=19, y=58, sprite=12}
+	e10={x=42, y=58, sprite=12}
+	e11={x=63, y=58, sprite=12}
+	e12={x=107, y=58, sprite=12}
 end
+
 function draw_enemies()
-spr(e.sprite,e.x*8,e.y*8)
+	spr(e1.sprite,e1.x*8,e1.y*8)
+	spr(e2.sprite,e2.x*8,e2.y*8)
+	spr(e3.sprite,e3.x*8,e3.y*8)
+	spr(e4.sprite,e4.x*8,e4.y*8)
+	
+	spr(e5.sprite,e5.x*8,e5.y*8)
+	spr(e6.sprite,e6.x*8,e6.y*8)
+	spr(e7.sprite,e7.x*8,e7.y*8)
+	spr(e8.sprite,e8.x*8,e8.y*8)
+	
+	spr(e9.sprite,e9.x*8,e9.y*8)
+	spr(e10.sprite,e10.x*8,e10.y*8)
+	spr(e11.sprite,e11.x*8,e11.y*8)
+	spr(e12.sprite,e12.x*8,e12.y*8)
 end
 
 function enemies_movement()
-if e.x ==01 then
-move_right = true
-move_left = false
-end
 
-if e.x == 20 then
-move_left = true
-move_right = false
-end
-
-if move_right == true then
-e.x+=0.25
-end
-if move_left == true then
-e.x-=0.25
-end
+	if e1.x == 01 then
+		move_right = true
+		move_left = false
+		end
+	if e1.x == 20 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e1.x+=0.25
+		end
+	if move_left == true then
+		e1.x-=0.25
+		end
+--	
+	if e2.x == 32 then
+		move_right = true
+		move_left = false
+		end
+	if e2.x == 40 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e2.x+=0.25
+		end
+	if move_left == true then
+		e2.x-=0.25
+		end
+--	
+	if e3.x == 74 then
+		move_right = true
+		move_left = false
+		end
+	if e3.x == 89 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e3.x+=0.25
+		end
+	if move_left == true then
+		e3.x-=0.25
+		end
+--
+	if e4.x == 112 then
+		move_right = true
+		move_left = false
+		end
+	if e4.x == 125 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e4.x+=0.25
+		end
+	if move_left == true then
+		e4.x-=0.25
+		end
+--
+ if e5.x == 111 then
+		move_right = true
+		move_left = false
+		end
+	if e5.x == 119 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e5.x+=0.25
+		end
+	if move_left == true then
+		e5.x-=0.25
+		end
+--	
+	if e6.x == 84 then
+		move_right = true
+		move_left = false
+		end
+	if e6.x == 93 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e6.x+=0.25
+		end
+	if move_left == true then
+		e6.x-=0.25
+		end
+--	
+	if e7.x == 56 then
+		move_right = true
+		move_left = false
+		end
+	if e7.x == 65 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e7.x+=0.25
+		end
+	if move_left == true then
+		e7.x-=0.25
+		end
+--
+	if e8.x == 9 then
+		move_right = true
+		move_left = false
+		end
+	if e8.x == 17 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e8.x+=0.25
+		end
+	if move_left == true then
+		e8.x-=0.25
+		end
+--
+ if e9.x == 19 then
+		move_right = true
+		move_left = false
+		end
+	if e9.x == 27 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e9.x+=0.25
+		end
+	if move_left == true then
+		e9.x-=0.25
+		end
+--
+ if e10.x == 42 then
+		move_right = true
+		move_left = false
+		end
+	if e10.x == 51 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e10.x+=0.25
+		end
+	if move_left == true then
+		e10.x-=0.25
+		end
+--	
+	if e11.x == 63 then
+		move_right = true
+		move_left = false
+		end
+	if e11.x == 72 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e11.x+=0.25
+		end
+	if move_left == true then
+		e11.x-=0.25
+		end
+--	
+	if e12.x == 107 then
+		move_right = true
+		move_left = false
+		end
+	if e12.x == 116 then
+		move_left = true
+		move_right = false
+		end
+	
+	if move_right == true then
+		e12.x+=0.25
+		end
+	if move_left == true then
+		e12.x-=0.25
+		end
 
 end
 
 
 __gfx__
 000000003333333344444444cccccccccccccc777cccccccc3333bcc0444444088e188e1cccccccccccccccc0000000000000000000000000070000000000000
-000000003333333344444444ccccccccccccc77677cccccc333333bc041ff14011111111cccccccccccccccc0aaaaaa0000000000000a0000777070000000000
-007007003333333344444444cccccccccccc77766777cccc3bb3333c04ffff40188e188eccceeeeeeeeecccc0a0000a000000000000aaa007777777000000000
-000770003333333344444444ccccccccccc7676666777cccb33b333c04f88f4011111111ccceeeeeeeeecccc0aa00aa000000000000a99007777777700000000
-000770003333333344444444cccccccccc766777777677cc333333cc04222240e188e188ccceefffffeecccc0a0aa0a000000000009999906666666600000000
-007007003333333344444444ccccccccc77777777776677cc4c44ccc0402204011111111ccceef0f0feecccc0a0aa0a000000000099989900000770000000000
-000000003333333344444444cccccccccccccccccccccccccc444ccc000ddd008e188e18ccceefffffeecccc0aa00aa000000000099888800007777000000000
-000000003333333344444444ccccccccccccccccccccccccccc44ccc000d000011111111ccceeff8ffeecccc00aaaa0000000000008888000066666600000000
+000000003333333344444444ccccccccccccc77677cccccc333333bc041ff14011111111cccccccccccccccc0aaaaaa00bb00bb00000a0000777070000000000
+007007003333333344444444cccccccccccc77766777cccc3bb3333c04ffff40188e188eccceeeeeeeeecccc0a0000a000b33b00000aaa007777777000000000
+000770003333333344444444ccccccccccc7676666777cccb33b333c04f88f4011111111ccceeeeeeeeecccc0aa00aa003bbbb30000a99007777777700000000
+000770003333333344444444cccccccccc766777777677cc333333cc04222240e188e188ccceefffffeecccc0a0aa0a003abba30009999906666666600000000
+007007003333333344444444ccccccccc77777777776677cc4c44ccc0402204011111111ccceef0f0feecccc0a0aa0a0003bb300099989900000770000000000
+000000003333333344444444cccccccccccccccccccccccccc444ccc000ddd008e188e18ccceefffffeecccc0aa00aa002033020099888800007777000000000
+000000003333333344444444ccccccccccccccccccccccccccc44ccc000d000011111111ccceeff8ffeecccc00aaaa0000e00e00008888000066666600000000
 666f76666666666666666666000088000000000066666666567777659999999966666666ccceeccfcceecccc0011110000000000666666666669a66600000000
 66f7776666666666666666660aee88e00000000067777776667777669222222966666666ccceecc2cceecccc01288210000000006bbb6eee6668666600000000
 6f8787766666666666666666eee9eeee0000000067777776775665779222222966666666cccee22222eecccc1289982100000000666666666675766600000000
